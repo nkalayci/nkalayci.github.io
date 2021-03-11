@@ -1,7 +1,6 @@
-# hidden files
-.*
-!.github
 
-# jekyll cache
-_site
-vendor
+# Azure Functions artifacts
+bin
+obj
+appsettings.json
+local.settings.json
