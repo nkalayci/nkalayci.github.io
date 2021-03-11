@@ -1,8 +1,3 @@
+param([string] $mySbMsg, $TriggerMetadata)
 
-param($QueueItem, $TriggerMetadata) 
-
-Push-OutputBinding -Name outputSbMsg -Value @{ 
-    name = $QueueItem.name 
-    employeeId = $QueueItem.employeeId 
-    address = $QueueItem.address 
-} 
+Write-Host "PowerShell ServiceBus queue trigger function processed message: $mySbMsg"
