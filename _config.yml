@@ -60,7 +60,7 @@ plugins:
 author:
   name   : "Neslihan Kalayci"
   avatar : "/assets/images/bio-photo.jpg"
-  bio    : "In a timelapse."
+  bio    : "In a time-lapse."
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"

@@ -19,12 +19,10 @@ Please check here for more [resources](https://learn.microsoft.com/en-us/graph/a
 ![graphPost1](/assets/images/graphPost1.png)
 
 
-`
-{
+`{
     "changeType": "updated",
     "clientState": "MyGraphExplorerSecretClientState",
     "notificationUrl": "https://prod-227.westeurope.logic.azure.com:443/workflows/***",
     "resource": "/communications/presences?$filter=id in ('<objectID>')",
     "expirationDateTime": "2023-02-02T18:00:00+00:00"
-}
-`
+}`
