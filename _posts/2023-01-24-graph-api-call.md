@@ -1,6 +1,6 @@
-Microsoft Graph and expolore its power
+# Microsoft Graph and expolore its power
 
-Microsoft Graph is the unified API for modern work
+## Microsoft Graph is the unified API for modern work
 
 Microsoft Graph is the gateway to data and intelligence in Microsoft 365 platform. Microsoft Graph exposes REST APIs and client libraries across data on the following cloud services:
 Microsoft 365 core services
@@ -19,10 +19,12 @@ Please check here for more [resources](https://learn.microsoft.com/en-us/graph/a
 ![graphPost1](/assets/images/graphPost1.png)
 
 
-`{
+```json
+{
     "changeType": "updated",
     "clientState": "MyGraphExplorerSecretClientState",
     "notificationUrl": "https://prod-227.westeurope.logic.azure.com:443/workflows/***",
     "resource": "/communications/presences?$filter=id in ('<objectID>')",
     "expirationDateTime": "2023-02-02T18:00:00+00:00"
-}`
+}
+```
