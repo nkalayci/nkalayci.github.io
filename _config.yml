@@ -1,0 +1,36 @@
+title: Neslihan Kalayci
+description: Personal portfolio and blog of Neslihan Kalayci - Developer, Innovator, Problem Solver
+theme: just-the-docs
+
+url: https://nkalayci.github.io
+
+aux_links:
+  GitHub: https://github.com/nkalayci
+  LinkedIn: https://linkedin.com/in/neslihankalayci
+
+# Site settings
+author: Neslihan Kalayci
+email: neslihan@example.com
+
+# Navigation settings
+nav_enabled: true
+nav_sort: case_insensitive
+
+# Search settings
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 2
+  preview_words_before: 3
+  preview_words_after: 3
+  tokenizer_separator: /[\s/]+/
+  rel_url: true
+
+# Footer settings
+footer_content: "Copyright &copy; 2025 Neslihan Kalayci. Distributed under the <a href=\"https://github.com/nkalayci/nkalayci.github.io/tree/main/LICENSE\">MIT License</a>."
+
+# Color scheme
+color_scheme: nil
+
+# Google Analytics (optional)
+# ga_tracking: UA-XXXXXXXXX-X
