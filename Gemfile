@@ -1,12 +1,11 @@
 source 'https://rubygems.org'
 
-gem "jekyll", "~> 4.3.0" # stable version for GitHub Pages
-gem "webrick" # required when using Ruby >= 3 and Jekyll <= 4.2.2
+gem "jekyll", "~> 4.3.2"
+gem "webrick"
+gem "just-the-docs", "0.7.0"
 
-gem "just-the-docs", "0.10.1" # pinned to the current release
-# gem "just-the-docs"        # always download the latest release
-
-# Jekyll plugins
-gem "jekyll-feed", "~> 0.15"
-gem "jekyll-sitemap", "~> 1.4"
-gem "jekyll-seo-tag", "~> 2.8"
+group :jekyll_plugins do
+  gem "jekyll-feed"
+  gem "jekyll-sitemap"
+  gem "jekyll-seo-tag"
+end
