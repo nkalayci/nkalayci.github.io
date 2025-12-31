@@ -37,15 +37,19 @@ markdown: kramdown
 highlighter: rouge
 permalink: pretty
 
-# Plugins
+# Plugins (GitHub Pages compatible)
 plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jekyll-github-metadata
 
 # Build settings
 sass:
   style: compressed
+
+# GitHub Pages settings
+github: [metadata]
 
 # Exclude from processing
 exclude:
