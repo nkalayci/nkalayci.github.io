@@ -32,5 +32,30 @@ footer_content: "Copyright &copy; 2025 Neslihan Kalayci. Distributed under the <
 # Color scheme
 color_scheme: nil
 
+# Jekyll configuration
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Build settings
+sass:
+  style: compressed
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .bundle
+  - .sass-cache
+  - _site
+  - node_modules
+
 # Google Analytics (optional)
 # ga_tracking: UA-XXXXXXXXX-X
