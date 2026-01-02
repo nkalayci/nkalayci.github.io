@@ -1,14 +1,15 @@
 ---
+layout: default
 title: Test Page
-layout: page
 nav_order: 7
+permalink: /test/
 ---
 
 # Test Page
 
 This is a test page to verify the Jekyll site is working correctly.
 
-**Last updated:** January 2, 2026
+**Last updated:** January 2, 2026 - 10:45 AM
 
 ## Test Elements
 
