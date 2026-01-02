@@ -8,6 +8,8 @@ nav_order: 7
 
 This is a test page to verify the Jekyll site is working correctly.
 
+**Last updated:** January 2, 2026
+
 ## Test Elements
 
 ### Text Formatting
