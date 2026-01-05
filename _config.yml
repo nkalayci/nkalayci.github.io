@@ -1,11 +1,14 @@
 title: Neslihan Kalayci
 description: Cloud, AI & Digital Sovereignty Documentation
-theme: minima
+remote_theme: pmarsceill/just-the-docs
 plugins:
   - jekyll-feed
+  - jekyll-remote-theme
 url: https://nkalayci.github.io
 search_enabled: true
-nav_sort: case_insensitive
 permalink: pretty
 footer_content: "© 2026 Neslihan Kalayci"
-heading_anchors: true
+
+# GitHub Pages settings
+markdown: kramdown
+highlighter: rouge
