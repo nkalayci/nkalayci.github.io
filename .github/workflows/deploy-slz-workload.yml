@@ -1,0 +1,122 @@
+name: Deploy SLZ - Workload
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Workload environment to deploy'
+        required: true
+        default: 'workload'
+        type: choice
+        options:
+          - workload
+  push:
+    branches:
+      - main
+    paths:
+      - 'terraform/modules/slz-core/**'
+      - 'terraform/environments/workload/**'
+      - '.github/workflows/deploy-slz-workload.yml'
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  TF_VERSION: 1.5.0
+  TERRAFORM_DIR: ./terraform
+
+jobs:
+  plan:
+    name: Terraform Plan - Workload
+    runs-on: ubuntu-latest
+    outputs:
+      tfplan: ${{ steps.plan.outputs.exitcode }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Azure Login with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID_WORKLOAD1 }}
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+        working-directory: ${{ env.TERRAFORM_DIR }}
+        continue-on-error: true
+
+      - name: Terraform Init
+        run: terraform init -upgrade
+        working-directory: ${{ env.TERRAFORM_DIR }}
+
+      - name: Terraform Plan
+        id: plan
+        run: |
+          terraform plan \
+            -var-file="environments/workload/terraform.tfvars" \
+            -var="platform_subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID_PLATFORM }}" \
+            -var="workload_subscription_ids={workload1=\"${{ secrets.AZURE_SUBSCRIPTION_ID_WORKLOAD1 }}\",workload2=\"${{ secrets.AZURE_SUBSCRIPTION_ID_WORKLOAD2 }}\"}" \
+            -out=tfplan.binary
+        working-directory: ${{ env.TERRAFORM_DIR }}
+
+      - name: Save Terraform Plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan-workload
+          path: ${{ env.TERRAFORM_DIR }}/tfplan.binary
+          retention-days: 1
+
+  apply:
+    name: Terraform Apply - Workload
+    needs: plan
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Azure Login with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID_WORKLOAD1 }}
+
+      - name: Download Terraform Plan
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan-workload
+          path: ${{ env.TERRAFORM_DIR }}
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ${{ env.TERRAFORM_DIR }}
+
+      - name: Terraform Apply
+        run: terraform apply tfplan.binary
+        working-directory: ${{ env.TERRAFORM_DIR }}
+
+      - name: Publish Deployment Summary
+        if: success()
+        run: |
+          echo "## SLZ Workload Deployment Successful ✅" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment**: Workload" >> $GITHUB_STEP_SUMMARY
+          echo "- **Region**: westeurope" >> $GITHUB_STEP_SUMMARY
+          echo "- **Timestamp**: $(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
